@@ -25,6 +25,8 @@ class Proposal(models.Model):
         default=ProposalStatusChoices.PROPOSED,
         help_text="Current status of the proposal"
     )
+    attendees = models.ManyToManyField(to='friends.Friend', related_name='attending_proposals', blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     updated_at = models.DateTimeField(auto_now=True)
