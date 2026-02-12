@@ -1,9 +1,10 @@
 from django.db import models
 
+from common.mixins import TimeStampModel
 from friends.validators import validate_image_size
 
 
-class Friend(models.Model):
+class Friend(TimeStampModel):
     name = models.CharField(
         max_length=100,
     )
@@ -13,8 +14,7 @@ class Friend(models.Model):
         null=True,
         validators=[validate_image_size]
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.name

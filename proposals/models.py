@@ -1,9 +1,10 @@
 from django.db import models
 
+from common.mixins import TimeStampModel
 from proposals.choices import ProposalStatusChoices
 
 
-class Proposal(models.Model):
+class Proposal(TimeStampModel):
     title = models.CharField(
         max_length=100,
     )
@@ -11,6 +12,7 @@ class Proposal(models.Model):
         max_length=100,
         help_text='Please enter the type of activity, e.g. "Eating out", "Bowling ect."'
     )
+
     proposed_date_and_time = models.DateTimeField(
         help_text='Please enter the proposed date and time of the event: '
     )
@@ -26,10 +28,6 @@ class Proposal(models.Model):
         help_text="Current status of the proposal"
     )
     attendees = models.ManyToManyField(to='friends.Friend', related_name='attending_proposals', blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.title} ({self.status})"
