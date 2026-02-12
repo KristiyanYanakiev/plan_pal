@@ -1,0 +1,11 @@
+{% load static %}
+<a href="{% url 'proposals:details' proposal.pk %}" class="text-decoration-none text-dark">
+    <div class="card proposal-card text-center shadow-sm mb-4" style="width: 18rem;">
+
+        <div class="card-body">
+            <h5 class="card-title">{{ proposal.title }}</h5>
+
+        </div>
+
+    </div>
+</a>

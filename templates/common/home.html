@@ -1,4 +1,54 @@
 {% extends 'shared/base.html' %}
+
+{% block title %}Home{% endblock %}
+
 {% block content %}
-    "Here is my Home page"
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome to PlanPal</h1>
+        <p class="lead">
+            Organize activities, track plans, and vote on proposals with your friend group — all without authentication.
+        </p>
+    </div>
+
+    <div class="row g-3 justify-content-center mb-5">
+        <div class="col-12 col-md-5 text-center">
+            <a href="{% url 'friends:create' %}" class="btn btn-primary btn-lg w-100">
+                Create a Friend
+            </a>
+        </div>
+        <div class="col-12 col-md-5 text-center">
+            <a href="#" class="btn btn-success btn-lg w-100">
+                Create a Proposal
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 h-100 text-center">
+                <h5 class="card-title fw-semibold mb-2">Friends</h5>
+                <p class="card-text mb-3">
+                    Keep track of each member of your social group. Each Friend participates in proposals and activities.
+                </p>
+                <a href="{% url 'friends:list' %}" class="btn btn-outline-primary">
+                    View Friends
+                </a>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 h-100 text-center">
+                <h5 class="card-title fw-semibold mb-2">Proposals</h5>
+                <p class="card-text mb-3">
+                    Create and manage activity proposals. Friends can vote yes/no to decide who will attend.
+                </p>
+                <a href="{% url 'proposals:list' %}" class="btn btn-outline-success">
+                    View Proposals
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

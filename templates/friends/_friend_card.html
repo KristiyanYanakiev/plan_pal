@@ -1,0 +1,26 @@
+{% load static %}
+
+<a href="{% url 'friends:details' friend.pk %}"
+   class="text-decoration-none text-dark d-block h-100">
+
+    <div class="card friend-card text-center border-0 shadow-sm rounded-4 h-100">
+
+        {% if friend.photo %}
+            <img src="{{ friend.photo.url }}"
+                 alt="{{ friend.name }}"
+                 class="rounded-circle mx-auto mt-4"
+                 style="width:110px; height:110px; object-fit:cover;">
+        {% else %}
+            <img src="{% static 'friends/profile_placeholder.jpg' %}"
+                 alt="{{ friend.name }}"
+                 class="rounded-circle mx-auto mt-4"
+                 style="width:110px; height:110px; object-fit:cover;">
+        {% endif %}
+
+        <div class="card-body">
+            <h5 class="card-title fw-semibold mb-2">{{ friend.name }}</h5>
+        </div>
+
+    </div>
+
+</a>

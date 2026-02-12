@@ -5,3 +5,7 @@ from django.shortcuts import render
 def home_page(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'common/home.html')
+
+def about_page(request: HttpRequest) -> HttpResponse:
+
+    return render(request, 'common/about.html')

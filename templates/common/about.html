@@ -1,0 +1,47 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h1 class="text-center mb-4">About PlanPal</h1>
+
+    <div class="card shadow-sm p-4 mb-4">
+        <p class="lead text-center">
+            PlanPal is a social planning web application designed for small groups of friends.
+            Easily propose activities, vote on plans, and keep track of upcoming events — all without the need for authentication.
+        </p>
+    </div>
+
+    <h3 class="mb-3">Key Features</h3>
+    <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+        <div class="col">
+            <div class="card h-100 p-3 shadow-sm">
+                <h5 class="card-title">Friends Management</h5>
+                <p class="card-text">
+                    Each member of the social group is represented as a Friend object in the system.
+                    Friends can participate in proposals, vote on activities, and track upcoming plans —
+                    all without requiring user authentication.
+                </p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 p-3 shadow-sm">
+                <h5 class="card-title">Proposals</h5>
+                <p class="card-text">Create, update, and manage activity proposals. Track their status: Proposed, Confirmed, Upcoming, Past, or Cancelled.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 p-3 shadow-sm">
+                <h5 class="card-title">Voting</h5>
+                <p class="card-text">Friends can vote Yes or No for any proposal. Votes determine attendees and help plan activities efficiently.</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock %}

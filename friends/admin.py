@@ -1,3 +1,9 @@
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
 
-# Register your models here.
+from friends.models import Friend
+
+
+@admin.register(Friend)
+class FriendAdmin(ModelAdmin):
+    pass

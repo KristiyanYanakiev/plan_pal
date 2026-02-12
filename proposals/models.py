@@ -13,6 +13,11 @@ class Proposal(TimeStampModel):
         help_text='Please enter the type of activity, e.g. "Eating out", "Bowling ect."'
     )
 
+    place_of_event = models.URLField(
+        null=True,
+        blank=True,
+        help_text='If you want, you can include a link to check the place:'
+    )
     proposed_date_and_time = models.DateTimeField(
         help_text='Please enter the proposed date and time of the event: '
     )
