@@ -12,4 +12,8 @@ class FriendForm(forms.ModelForm):
                 'required': 'Please enter a name.'
             }
         }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
 
