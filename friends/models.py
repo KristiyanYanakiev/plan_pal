@@ -9,7 +9,6 @@ class Friend(TimeStampModel):
         max_length=100,
     )
     photo = models.ImageField(
-        upload_to='media',
         blank=True,
         null=True,
         validators=[validate_image_size]

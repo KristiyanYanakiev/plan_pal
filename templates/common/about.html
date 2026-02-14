@@ -4,44 +4,34 @@
 
 {% block content %}
 <div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card shadow-sm p-4">
+                <h2 class="card-title text-center mb-4">About PlanPal</h2>
 
-    <h1 class="text-center mb-4">About PlanPal</h1>
+                <p>PlanPal is a social planning web application designed for a <strong>single friend group</strong>.
+                It allows friends to:</p>
+                <ul>
+                    <li>Create and manage friend profiles</li>
+                    <li>Propose activities and events</li>
+                    <li>Vote on which proposals to participate in</li>
+                    <li>Track upcoming events in a shared space</li>
+                </ul>
 
-    <div class="card shadow-sm p-4 mb-4">
-        <p class="lead text-center">
-            PlanPal is a social planning web application designed for small groups of friends.
-            Easily propose activities, vote on plans, and keep track of upcoming events — all without the need for authentication.
-        </p>
-    </div>
+                <p>All friends, proposals,
+                and votes exist in a shared space, and there is no authentication. The goal is to provide a simple
+                and realistic tool for small communities to plan activities together without login or accounts.</p>
 
-    <h3 class="mb-3">Key Features</h3>
-    <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
-        <div class="col">
-            <div class="card h-100 p-3 shadow-sm">
-                <h5 class="card-title">Friends Management</h5>
-                <p class="card-text">
-                    Each member of the social group is represented as a Friend object in the system.
-                    Friends can participate in proposals, vote on activities, and track upcoming plans —
-                    all without requiring user authentication.
+                <p>PlanPal follows the principle of simplicity while providing meaningful functionality:
+                    proposals can be created, updated, confirmed, or cancelled; friends can vote; and the status
+                    of upcoming plans is clearly displayed.</p>
+
+                <p class="text-center mt-4">
+                    <a href="{% url 'friends:list' %}" class="btn btn-primary btn-lg me-2">View Friends</a>
+                    <a href="{% url 'proposals:list' %}" class="btn btn-success btn-lg">View Proposals</a>
                 </p>
             </div>
         </div>
-        <div class="col">
-            <div class="card h-100 p-3 shadow-sm">
-                <h5 class="card-title">Proposals</h5>
-                <p class="card-text">Create, update, and manage activity proposals. Track their status: Proposed, Confirmed, Upcoming, Past, or Cancelled.</p>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 p-3 shadow-sm">
-                <h5 class="card-title">Voting</h5>
-                <p class="card-text">Friends can vote Yes or No for any proposal. Votes determine attendees and help plan activities efficiently.</p>
-            </div>
-        </div>
-
     </div>
-
-
-
 </div>
 {% endblock %}

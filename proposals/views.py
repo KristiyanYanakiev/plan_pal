@@ -1,6 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
+from friends.models import Friend
 from proposals.forms import ProposalForm
 from proposals.models import Proposal
 
@@ -13,15 +14,25 @@ def proposals_list(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'proposals/list.html', context)
 
-def proposal_details(request: HttpRequest, pk:int) -> HttpResponse:
+def select_voter(request, pk):
+    if request.method == "POST":
+        friend_id = request.POST.get("friend_id")
+        request.session["active_friend_id"] = friend_id
+    return redirect("proposals:details", pk=pk)
 
+def proposal_details(request, pk):
     proposal = get_object_or_404(Proposal, pk=pk)
+    friends = Friend.objects.all()
+
+    voted_friend_ids = set(proposal.votes.values_list("friend_id", flat=True))
 
     context = {
-        'proposal': proposal
+        "proposal": proposal,
+        "friends": friends,
+        "voted_friend_ids": voted_friend_ids,
     }
 
-    return render(request, 'proposals/details.html', context)
+    return render(request, "proposals/details.html", context)
 
 
 def create_proposal(request: HttpRequest) -> HttpResponse:

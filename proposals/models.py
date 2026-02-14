@@ -32,7 +32,6 @@ class Proposal(TimeStampModel):
         default=ProposalStatusChoices.PROPOSED,
         help_text="Current status of the proposal"
     )
-    attendees = models.ManyToManyField(to='friends.Friend', related_name='attending_proposals', blank=True)
 
     def __str__(self):
         return f"{self.title} ({self.status})"

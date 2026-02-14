@@ -9,7 +9,8 @@ urlpatterns = [
     path('<int:pk>/', include([
         path('', views.proposal_details, name='details'),
         path('edit/', views.edit_proposal, name='edit'),
-        path('delete/', views.delete_proposal, name='delete')
+        path('delete/', views.delete_proposal, name='delete'),
+        path('select_friend/', views.select_voter, name='select_friend')
 
     ]))
 ]
