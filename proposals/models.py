@@ -1,7 +1,6 @@
 from django.db import models
 
 from common.mixins import TimeStampModel
-from proposals.choices import ProposalStatusChoices
 
 
 class Proposal(TimeStampModel):
@@ -27,11 +26,6 @@ class Proposal(TimeStampModel):
         null=True,
     )
 
-    status = models.CharField(
-        choices=ProposalStatusChoices.choices,
-        default=ProposalStatusChoices.PROPOSED,
-        help_text="Current status of the proposal"
-    )
 
     def __str__(self):
         return f"{self.title} ({self.status})"

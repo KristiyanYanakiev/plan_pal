@@ -7,46 +7,71 @@
 
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold">Welcome to PlanPal</h1>
-        <p class="lead">
+        <p class="lead text-muted">
             Organize activities, track plans, and vote on proposals with your friend group.
         </p>
     </div>
 
     <div class="row g-3 justify-content-center mb-5">
-        <div class="col-12 col-md-5 text-center">
-            <a href="{% url 'friends:create' %}" class="btn btn-primary btn-lg w-100">
+        <div class="col-12 col-md-5">
+            <a href="{% url 'friends:create' %}" class="btn btn-primary btn-lg w-100 shadow-sm">
                 Create a Friend
             </a>
         </div>
-        <div class="col-12 col-md-5 text-center">
-            <a href="{% url 'proposals:create' %}" class="btn btn-success btn-lg w-100">
+        <div class="col-12 col-md-5">
+            <a href="{% url 'proposals:create' %}" class="btn btn-success btn-lg w-100 shadow-sm">
                 Create a Proposal
             </a>
         </div>
     </div>
 
-    <div class="row g-4">
-        <div class="col-12 col-md-6">
-            <div class="card shadow-sm p-4 h-100 text-center">
-                <h5 class="card-title fw-semibold mb-2">Friends</h5>
-                <p class="card-text mb-3">
-                    Keep track of each member of your social group. Each Friend participates in proposals and activities.
-                </p>
-                <a href="{% url 'friends:list' %}" class="btn btn-outline-primary">
-                    View Friends
-                </a>
+    <div class="row g-3 mb-5 text-center">
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm h-100 p-3">
+                <h6 class="fw-semibold mb-2">Friends</h6>
+                <p class="text-muted small mb-3">Track each member of your social group.</p>
+                <a href="{% url 'friends:list' %}" class="btn btn-outline-primary btn-sm w-100">View</a>
             </div>
         </div>
-        <div class="col-12 col-md-6">
-            <div class="card shadow-sm p-4 h-100 text-center">
-                <h5 class="card-title fw-semibold mb-2">Proposals</h5>
-                <p class="card-text mb-3">
-                    Create and manage activity proposals. Friends can vote yes/no to decide who will attend.
-                </p>
-                <a href="{% url 'proposals:list' %}" class="btn btn-outline-success">
-                    View Proposals
-                </a>
+        <div class="col-6 col-md-3">
+            <div class="card shadow-sm h-100 p-3">
+                <h6 class="fw-semibold mb-2">Proposals</h6>
+                <p class="text-muted small mb-3">Create & manage activity proposals.</p>
+                <a href="{% url 'proposals:list' %}" class="btn btn-outline-success btn-sm w-100">View</a>
             </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-semibold">Dashboard</h2>
+        <p class="text-muted mb-4">Quick overview of past and upcoming events</p>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="text-center mb-3 text-secondary">Past Events</h4>
+        <div class="row g-4 justify-content-center">
+            {% for proposal in past_events %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    {% include 'proposals/_proposal_card.html' %}
+                </div>
+            {% empty %}
+                <p class="text-muted text-center">No past events yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h4 class="text-center mb-3 text-primary">Upcoming Events</h4>
+        <div class="row g-4 justify-content-center">
+            {% for proposal in upcoming_events %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    {% include 'proposals/_proposal_card.html' %}
+                </div>
+            {% empty %}
+                <p class="text-muted text-center">No upcoming events scheduled.</p>
+            {% endfor %}
         </div>
     </div>
 
