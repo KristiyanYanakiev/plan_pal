@@ -39,7 +39,7 @@ def create_proposal(request: HttpRequest) -> HttpResponse:
     form = ProposalForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         form.save()
-        return redirect('proposal:list')
+        return redirect('proposals:list')
 
     context = {
             'form': form,
