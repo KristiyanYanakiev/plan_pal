@@ -68,36 +68,36 @@ The home dashboard separates upcoming and past events for quick overview.
 
 ## ▶ Run Locally
 
-# 1. Clone the repository
+### 1. Clone the repository
 git clone https://github.com/KristiyanYanakiev/plan_pal.git
 cd plan_pal
 
-# 2. Create a virtual environment
+### 2. Create a virtual environment
 python3 -m venv venv
 source venv/bin/activate      # Linux / Mac
 venv\Scripts\activate         # Windows
 
-# 3. Install dependencies
+### 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Setup environment variables
+### 4. Setup environment variables
 cp .env.example .env
-# Then edit .env to configure your PostgreSQL credentials
+### Then edit .env to configure your PostgreSQL credentials
 
-# 5. Create PostgreSQL database matching DB_NAME
-# Example: create a database named 'plan_pal'
+### 5. Create PostgreSQL database matching DB_NAME
+Example: create a database named 'plan_pal'
 
-# 6. Apply migrations
+### 6. Apply migrations
 python3 manage.py migrate
 
-# 7. Create admin user
+### 7. Create admin user
 python3 manage.py createsuperuser
 
-# 8. Run the development server
+### 8. Run the development server
 python3 manage.py runserver
 
-# Open in your browser:
-# http://127.0.0.1:8000/
+### Open in your browser:
+http://127.0.0.1:8000/
 
 ---
 
@@ -119,10 +119,10 @@ This project was built as a portfolio application demonstrating:
 
 - Django models and relationships  
 - Forms and validation  
-- Class-based views  
+- Function-based views  
 - Business logic enforcement  
 - Clean UI integration  
-- Real-world problem solving  
+- Real-world problem-solving  
 
 ---
 
