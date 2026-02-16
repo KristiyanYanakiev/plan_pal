@@ -1,7 +1,6 @@
 # PlanPal
 
 PlanPal is a Django web application that helps a small group of friends organize activities, propose events, and vote on attendance in a clear and structured way.
-
 The goal of the project is to replace messy group chats with a simple shared planner where everyone can instantly see what is planned and who is coming.
 
 ---
@@ -74,7 +73,7 @@ cd plan_pal
 
 ### 2. Create a virtual environment
 python3 -m venv venv
-source venv/bin/activate      # Linux / Mac
+source venv/bin/activate      # Linux / Mac \
 venv\Scripts\activate         # Windows
 
 ### 3. Install dependencies
