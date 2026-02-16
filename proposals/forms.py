@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from proposals.models import Proposal
 
@@ -28,3 +30,13 @@ class ProposalForm(forms.ModelForm):
             }),
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
+
+
+    def clean_proposed_date_and_time(self):
+        date_time = self.cleaned_data.get('proposed_date_and_time')
+
+        if date_time and date_time < timezone.now():
+            raise ValidationError("You cannot schedule an event in the past.")
+
+        return date_time
+
