@@ -1,15 +1,28 @@
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from friends.models import Friend
-from proposals.forms import ProposalForm
+from proposals.forms import ProposalForm, ProposalSearchForm
 from proposals.models import Proposal
 
 
 def proposals_list(request: HttpRequest) -> HttpResponse:
+    proposal_search_form = ProposalSearchForm(request.GET or None)
     proposals = Proposal.objects.all()
+
+    if 'query' in request.GET:
+        if proposal_search_form.is_valid():
+            searched_value = proposal_search_form.cleaned_data['query']
+            proposals = Proposal.objects.filter(
+                Q(title__icontains=searched_value)
+                    |
+                Q(notes__contains=searched_value)
+            )
+
     context = {
         'proposals': proposals,
+        'proposal_search_form': proposal_search_form
     }
 
     return render(request, 'proposals/list.html', context)

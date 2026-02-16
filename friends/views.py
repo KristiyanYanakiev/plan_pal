@@ -1,17 +1,25 @@
 from idlelib.rpc import request_queue
 
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
-from friends.forms import FriendForm
+from friends.forms import FriendForm, FriendSearchFrom
 from friends.models import Friend
 
 
 def friends_list(request: HttpRequest) -> HttpResponse:
-
+    friend_search_form = FriendSearchFrom(request.GET or None)
     friends = Friend.objects.all()
+
+    if request.method == 'GET':
+        if friend_search_form.is_valid():
+            query = friend_search_form.cleaned_data['query']
+            friends = Friend.objects.filter(name__icontains=query)
+
     context = {
-        'friends': friends
+        'friends': friends,
+        'friend_search_form': friend_search_form
     }
 
     return render(request, 'friends/list.html', context)

@@ -2,6 +2,12 @@ from django import forms
 
 from proposals.models import Proposal
 
+class ProposalSearchForm(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        label='',
+        required=False
+    )
 
 class ProposalForm(forms.ModelForm):
 

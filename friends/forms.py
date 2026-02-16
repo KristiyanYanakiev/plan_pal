@@ -17,3 +17,9 @@ class FriendForm(forms.ModelForm):
             'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
+class FriendSearchFrom(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        label='',
+        required=False
+    )
