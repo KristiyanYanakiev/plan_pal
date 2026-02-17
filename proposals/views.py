@@ -33,19 +33,26 @@ def select_voter(request, pk):
         request.session["active_friend_id"] = friend_id
     return redirect("proposals:details", pk=pk)
 
+from django.shortcuts import get_object_or_404, render
+from friends.models import Friend
+from proposals.models import Proposal
+
 def proposal_details(request, pk):
     proposal = get_object_or_404(Proposal, pk=pk)
-    friends = Friend.objects.all()
 
-    voted_friend_ids = set(proposal.votes.values_list("friend_id", flat=True))
+    yes_friends = proposal.participants.filter(votes__proposal=proposal, votes__yes=True)
+    no_friends = proposal.participants.filter(votes__proposal=proposal, votes__yes=False)
+    not_voted = Friend.objects.exclude(votes__proposal=proposal)
 
     context = {
         "proposal": proposal,
-        "friends": friends,
-        "voted_friend_ids": voted_friend_ids,
+        "yes_friends": yes_friends,
+        "no_friends": no_friends,
+        "not_voted": not_voted,
     }
 
     return render(request, "proposals/details.html", context)
+
 
 
 def create_proposal(request: HttpRequest) -> HttpResponse:

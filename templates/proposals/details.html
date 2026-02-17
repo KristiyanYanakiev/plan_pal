@@ -53,7 +53,7 @@
                             <label for="friendSelect" class="form-label"></label>
                             <select id="friendSelect" name="friend_id" class="form-select" required>
                                 <option value="" disabled selected hidden>Select Yourself</option>
-                                {% for friend in friends %}
+                                {% for friend in not_voted %}
                                     <option value="{{ friend.pk }}">{{ friend.name }}</option>
                                 {% endfor %}
                             </select>
@@ -77,10 +77,8 @@
                         <div class="card-body">
                             <h5 class="text-success text-center">Attending</h5>
                             <ul class="list-unstyled text-center mt-3">
-                                {% for vote in proposal.votes.all %}
-                                    {% if vote.yes %}
-                                        <li>{{ vote.friend.name }}</li>
-                                    {% endif %}
+                                {% for friend in yes_friends %}
+                                    <li>{{ friend.name }}</li>
                                 {% empty %}
                                     <li>No votes</li>
                                 {% endfor %}
@@ -94,10 +92,8 @@
                         <div class="card-body">
                             <h5 class="text-danger text-center">Not Attending</h5>
                             <ul class="list-unstyled text-center mt-3">
-                                {% for vote in proposal.votes.all %}
-                                    {% if not vote.yes %}
-                                        <li>{{ vote.friend.name }}</li>
-                                    {% endif %}
+                                {% for friend in no_friends %}
+                                    <li>{{ friend.name }}</li>
                                 {% empty %}
                                     <li>No votes</li>
                                 {% endfor %}
@@ -111,10 +107,8 @@
                         <div class="card-body">
                             <h5 class="text-secondary text-center">No Response</h5>
                             <ul class="list-unstyled text-center mt-3">
-                                {% for friend in friends %}
-                                    {% if friend.pk not in voted_friend_ids %}
-                                        <li>{{ friend.name }}</li>
-                                    {% endif %}
+                                {% for friend in not_voted %}
+                                    <li>{{ friend.name }}</li>
                                 {% endfor %}
                             </ul>
                         </div>

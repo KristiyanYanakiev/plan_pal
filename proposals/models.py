@@ -26,8 +26,13 @@ class Proposal(TimeStampModel):
         null=True,
     )
 
+    participants = models.ManyToManyField(
+        to='friends.Friend',
+        through='votes.Vote',
+        related_name='proposals'
+    )
 
     def __str__(self):
-        return f"{self.title} ({self.status})"
+        return f"{self.title}"
 
 
