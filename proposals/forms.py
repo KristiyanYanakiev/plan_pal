@@ -15,7 +15,7 @@ class ProposalForm(forms.ModelForm):
 
     class Meta:
         model = Proposal
-        exclude = ['attendees', 'created_at', 'updated_at']
+        exclude = ['participants', 'created_at', 'updated_at']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'type_of_activity': forms.TextInput(attrs={'class': 'form-control'}),
@@ -28,7 +28,7 @@ class ProposalForm(forms.ModelForm):
                 'class': 'form-control',
                 'rows': 3
             }),
-            'status': forms.Select(attrs={'class': 'form-select'}),
+
         }
 
 
