@@ -125,3 +125,19 @@ This project was built as a portfolio application demonstrating:
 
 ---
 
+## Screenshots
+
+### Friends List
+![Friends List](screenshots/friends_list.png)
+
+### Create Friend
+![Create Friend](screenshots/create_friend.png)
+
+### Friends List
+![Proposals List](screenshots/proposal_list.png)
+
+### Create Proposal
+![Create Proposal](screenshots/create_proposal.png)
+
+### Voting a Proposal
+![Voting a Proposal](screenshots/voting_functionality.png)
