@@ -141,3 +141,6 @@ This project was built as a portfolio application demonstrating:
 
 ### Voting a Proposal
 ![Voting a Proposal](screenshots/voting_functionality.png)
+
+### Past and Upcoming events
+![Voting a Proposal](screenshots/past_and_upcoming_events.png)
