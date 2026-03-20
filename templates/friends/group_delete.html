@@ -1,0 +1,28 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}Delete Friend Group{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 text-center">
+
+                <h2 class="card-title mb-4">Delete Friend Group</h2>
+
+                <p>Are you sure you want to delete the group <strong>{{ group.name }}</strong>?</p>
+                <p class="text-muted">All friends in this group will remain, but they will no longer be associated with it.</p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center gap-2 mt-4">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a href="{% url 'friends:group_list' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

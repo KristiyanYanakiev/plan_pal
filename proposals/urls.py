@@ -1,16 +1,12 @@
-from django.urls import path, include
-from proposals import views
+from django.urls import path
+from . import views
 
 app_name = 'proposals'
 
 urlpatterns = [
-    path('', views.proposals_list, name='list'),
-    path('create/', views.create_proposal, name='create'),
-    path('<int:pk>/', include([
-        path('', views.proposal_details, name='details'),
-        path('edit/', views.edit_proposal, name='edit'),
-        path('delete/', views.delete_proposal, name='delete'),
-        path('select_friend/', views.select_voter, name='select_friend')
-
-    ]))
+    path('', views.ProposalListView.as_view(), name='list'),
+    path('create/', views.ProposalCreateView.as_view(), name='create'),
+    path('<int:pk>/edit/', views.ProposalUpdateView.as_view(), name='edit'),
+    path('<int:pk>/delete/', views.ProposalDeleteView.as_view(), name='delete'),
+    path('<int:pk>/', views.ProposalDetailView.as_view(), name='details'),
 ]

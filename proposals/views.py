@@ -1,94 +1,48 @@
-from django.db.models import Q
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
 
-from friends.models import Friend
-from proposals.forms import ProposalForm, ProposalSearchForm
-from proposals.models import Proposal
+from friends.models import FriendGroup
+from .forms import ProposalForm
+from .models import Proposal
 
+class ProposalListView(LoginRequiredMixin, ListView):
+    model = Proposal
+    template_name = 'proposals/list.html'
 
-def proposals_list(request: HttpRequest) -> HttpResponse:
-    proposal_search_form = ProposalSearchForm(request.GET or None)
-    proposals = Proposal.objects.all()
+    def get_queryset(self):
+        return Proposal.objects.filter(group__owner=self.request.user)
 
-    if 'query' in request.GET:
-        if proposal_search_form.is_valid():
-            searched_value = proposal_search_form.cleaned_data['query']
-            proposals = Proposal.objects.filter(
-                Q(title__icontains=searched_value)
-                    |
-                Q(notes__contains=searched_value)
-            )
+class ProposalCreateView(LoginRequiredMixin, CreateView):
+    model = Proposal
+    form_class = ProposalForm
+    template_name = 'proposals/form.html'
+    success_url = reverse_lazy('proposals:list')
 
-    context = {
-        'proposals': proposals,
-        'proposal_search_form': proposal_search_form
-    }
+    def form_valid(self, form):
+        form.instance.group = FriendGroup.objects.filter(owner=self.request.user).first()
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
-    return render(request, 'proposals/list.html', context)
+class ProposalUpdateView(LoginRequiredMixin, UpdateView):
+    model = Proposal
+    form_class = ProposalForm
+    template_name = 'proposals/form.html'
+    success_url = reverse_lazy('proposals:list')
 
-def select_voter(request, pk):
-    if request.method == "POST":
-        friend_id = request.POST.get("friend_id")
-        request.session["active_friend_id"] = friend_id
-    return redirect("proposals:details", pk=pk)
+class ProposalDeleteView(LoginRequiredMixin, DeleteView):
+    model = Proposal
+    template_name = 'proposals/delete.html'
+    success_url = reverse_lazy('proposals:list')
 
-from django.shortcuts import get_object_or_404, render
-from friends.models import Friend
-from proposals.models import Proposal
+class ProposalDetailView(LoginRequiredMixin, DetailView):
+    model = Proposal
+    template_name = 'proposals/details.html'
 
-def proposal_details(request, pk):
-    proposal = get_object_or_404(Proposal, pk=pk)
-
-    yes_friends = proposal.participants.filter(votes__proposal=proposal, votes__yes=True)
-    no_friends = proposal.participants.filter(votes__proposal=proposal, votes__yes=False)
-    not_voted = Friend.objects.exclude(votes__proposal=proposal)
-
-    context = {
-        "proposal": proposal,
-        "yes_friends": yes_friends,
-        "no_friends": no_friends,
-        "not_voted": not_voted,
-    }
-
-    return render(request, "proposals/details.html", context)
-
-
-
-def create_proposal(request: HttpRequest) -> HttpResponse:
-    form = ProposalForm(request.POST or None)
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        return redirect('proposals:list')
-
-    context = {
-            'form': form,
-        }
-
-    return render(request, 'proposals/create.html', context)
-
-def edit_proposal(request: HttpRequest, pk) -> HttpResponse:
-    proposal = get_object_or_404(Proposal, pk=pk)
-    form = ProposalForm(request.POST or None, instance=proposal)
-
-    if request.method == 'POST' and form.is_valid():
-        instance = form.save()
-        return redirect('proposals:details', pk=instance.pk)
-
-    context = {
-        'proposal': proposal,
-        'form': form,
-    }
-    return render(request, 'proposals/edit.html', context)
-
-def delete_proposal(request: HttpRequest, pk) -> HttpResponse:
-    proposal = get_object_or_404(Proposal, pk=pk)
-
-    if request.method == 'POST':
-        proposal.delete()
-        return redirect('proposals:list')
-
-    context = {
-        'proposal': proposal,
-    }
-    return render(request, 'proposals/delete.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        proposal = self.object
+        context['yes_friends'] = proposal.group.friends.filter(votes__proposal=proposal, votes__yes=True)
+        context['no_friends'] = proposal.group.friends.filter(votes__proposal=proposal, votes__yes=False)
+        context['not_voted'] = proposal.group.friends.exclude(votes__proposal=proposal)
+        return context

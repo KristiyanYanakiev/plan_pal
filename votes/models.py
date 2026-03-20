@@ -1,8 +1,12 @@
 from django.db import models
 
+from friends.models import Friend
+from proposals.models import Proposal
+
+
 class Vote(models.Model):
-    proposal = models.ForeignKey('proposals.Proposal', on_delete=models.CASCADE, related_name='votes')
-    friend = models.ForeignKey('friends.Friend', on_delete=models.CASCADE, related_name='votes')
+    proposal = models.ForeignKey(to=Proposal, on_delete=models.CASCADE)
+    friend = models.ForeignKey(to=Friend, on_delete=models.CASCADE)
     yes = models.BooleanField(default=False)
 
     class Meta:

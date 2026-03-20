@@ -1,84 +1,65 @@
-from idlelib.rpc import request_queue
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from django.db.models import Q
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
-
-from friends.forms import FriendForm, FriendSearchFrom
-from friends.models import Friend
+from .forms import FriendGroupForm, FriendForm
+from .models import FriendGroup, Friend
 
 
-def friends_list(request: HttpRequest) -> HttpResponse:
-    friend_search_form = FriendSearchFrom(request.GET or None)
-    friends = Friend.objects.all()
+class FriendGroupListView(LoginRequiredMixin, ListView):
+    model = FriendGroup
+    template_name = 'friends/group_list.html'
 
-    if request.method == 'GET':
-        if friend_search_form.is_valid():
-            query = friend_search_form.cleaned_data['query']
-            friends = Friend.objects.filter(name__icontains=query)
+    def get_queryset(self):
+        return FriendGroup.objects.filter(owner=self.request.user)
 
-    context = {
-        'friends': friends,
-        'friend_search_form': friend_search_form
-    }
+class FriendGroupCreateView(LoginRequiredMixin, CreateView):
+    model = FriendGroup
+    form_class = FriendGroupForm
+    template_name = 'friends/group_form.html'
+    success_url = reverse_lazy('friends:group-list')
 
-    return render(request, 'friends/list.html', context)
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
-def friend_details(request: HttpRequest, pk:int) -> HttpResponse:
+class FriendGroupUpdateView(LoginRequiredMixin, UpdateView):
+    model = FriendGroup
+    form_class = FriendGroupForm
+    template_name = 'friends/group_form.html'
+    success_url = reverse_lazy('friends:group-list')
 
-    friend = get_object_or_404(Friend, pk=pk)
-
-    context = {
-        'friend': friend
-    }
-
-    return render(request, 'friends/details.html', context)
-
-def create_friend(request: HttpRequest) -> HttpResponse:
+class FriendGroupDeleteView(LoginRequiredMixin, DeleteView):
+    model = FriendGroup
+    template_name = 'friends/group_delete.html'
+    success_url = reverse_lazy('friends:group-list')
 
 
-    if request.method == 'POST':
-        form = FriendForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('friends:list')
-    else:
-        form = FriendForm()
+class FriendListView(LoginRequiredMixin, ListView):
+    model = Friend
+    template_name = 'friends/list.html'
 
-    context = {
-            'form': form,
-        }
+    def get_queryset(self):
+        return Friend.objects.filter(group__owner=self.request.user)
 
-    return render(request, 'friends/create.html', context)
+class FriendCreateView(LoginRequiredMixin, CreateView):
+    model = Friend
+    form_class = FriendForm
+    template_name = 'friends/form.html'
+    success_url = reverse_lazy('friends:list')
 
-def edit_friend(request: HttpRequest, pk:int) -> HttpResponse:
+    def form_valid(self, form):
+        group = FriendGroup.objects.filter(owner=self.request.user).first()
+        form.instance.group = group
+        return super().form_valid(form)
 
-    friend = get_object_or_404(Friend, pk=pk)
+class FriendUpdateView(LoginRequiredMixin, UpdateView):
+    model = Friend
+    form_class = FriendForm
+    template_name = 'friends/form.html'
+    success_url = reverse_lazy('friends:list')
 
-    if request.method == 'POST':
-        form = FriendForm(request.POST, request.FILES, instance=friend)
-        if form.is_valid():
-            instance = form.save()
-            return redirect('friends:details', pk=instance.pk)
-    else:
-        form = FriendForm(instance=friend)
-
-    context = {
-        'friend': friend,
-        'form': form
-    }
-
-    return render(request, 'friends/edit.html', context)
-
-def delete_friend(request: HttpRequest, pk) -> HttpResponse:
-    friend = get_object_or_404(Friend, pk=pk)
-
-    if request.method == 'POST':
-        friend.delete()
-        return redirect('friends:list')
-
-    context = {
-        'friend': friend
-    }
-
-    return render(request, 'friends/delete.html', context)
+class FriendDeleteView(LoginRequiredMixin, DeleteView):
+    model = Friend
+    template_name = 'friends/delete.html'
+    success_url = reverse_lazy('friends:list')

@@ -1,38 +1,18 @@
 from django.db import models
+from friends.models import FriendGroup
+from plan_pal import settings
 
-from common.mixins import TimeStampModel
 
-
-class Proposal(TimeStampModel):
-    title = models.CharField(
-        max_length=100,
-    )
-    type_of_activity = models.CharField(
-        max_length=100,
-        help_text='Please enter the type of activity, e.g. "Eating out", "Bowling ect."'
-    )
-
-    place_of_event = models.URLField(
-        null=True,
-        blank=True,
-        help_text='If you want, you can include a link to check the place:'
-    )
-    proposed_date_and_time = models.DateTimeField(
-        help_text='Please enter the proposed date and time of the event: '
-    )
-
-    notes = models.TextField(
-        blank=True,
-        null=True,
-    )
-
-    participants = models.ManyToManyField(
-        to='friends.Friend',
-        through='votes.Vote',
-        related_name='proposals'
-    )
+class Proposal(models.Model):
+    title = models.CharField(max_length=100)
+    group = models.ForeignKey(to=FriendGroup, on_delete=models.CASCADE, related_name='proposals', blank=True, null=True)
+    created_by = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    proposed_date_and_time = models.DateTimeField()
+    type_of_activity = models.CharField(max_length=100)
+    place_of_event = models.URLField(blank=True, null=True)
+    notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.title} ({self.group})"
 
 

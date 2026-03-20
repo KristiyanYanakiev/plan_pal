@@ -1,21 +1,24 @@
 from django import forms
+from friends.models import FriendGroup, Friend
 
-from friends.models import Friend
 
+class FriendGroupForm(forms.ModelForm):
+    class Meta:
+        model = FriendGroup
+        exclude = ['owner', 'created_at', 'updated_at']  # owner set automatically in view
+        error_messages = {
+            'name': {
+                'required': 'Please enter a group name.'
+            }
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter group name'}),
+        }
 
 class FriendForm(forms.ModelForm):
     class Meta:
         model = Friend
-        exclude = ['created_at', 'updated_at']
-        error_messages = {
-            'name': {
-                'required': 'Please enter a name.'
-            }
-        }
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-        }
+        fields = ['name']
 
 class FriendSearchFrom(forms.Form):
     query = forms.CharField(
