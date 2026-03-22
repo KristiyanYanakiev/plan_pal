@@ -1,8 +1,12 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 from proposals.models import Proposal
+
+User = get_user_model()
+
 
 class ProposalSearchForm(forms.Form):
     query = forms.CharField(
@@ -12,24 +16,19 @@ class ProposalSearchForm(forms.Form):
     )
 
 class ProposalForm(forms.ModelForm):
-
     class Meta:
         model = Proposal
-        exclude = ['participants', 'created_at', 'updated_at']
+        exclude = ['owner']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'type_of_activity': forms.TextInput(attrs={'class': 'form-control'}),
-            'place_of_event': forms.URLInput(attrs={'class': 'form-control'}),
-            'proposed_date_and_time': forms.DateTimeInput(attrs={
-                'class': 'form-control',
-                'type': 'datetime-local'
-            }),
-            'notes': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3
-            }),
-
+            'participants': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            self.fields['participants'].queryset = User.objects.exclude(id=user.id)
 
 
     def clean_proposed_date_and_time(self):

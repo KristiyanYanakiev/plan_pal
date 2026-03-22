@@ -37,7 +37,8 @@ PROJECT_APPS = [
     'proposals',
     'votes',
     'accounts',
-    'common'
+    'common',
+    'comments'
 ]
 
 INSTALLED_APPS = [

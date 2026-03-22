@@ -1,11 +1,9 @@
 from django.conf import settings
 from django.db import models
-
-from friends.models import Friend
 from proposals.models import Proposal
 
 
-class Vote(models.Model):
+class Comment(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -14,10 +12,9 @@ class Vote(models.Model):
     proposal = models.ForeignKey(
         Proposal,
         on_delete=models.CASCADE,
-        related_name='votes'
+        related_name='comments'
     )
 
-    yes = models.BooleanField()
+    text = models.TextField()
 
-    class Meta:
-        unique_together = ('user', 'proposal')
+    created_at = models.DateTimeField(auto_now_add=True)

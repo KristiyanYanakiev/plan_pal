@@ -42,24 +42,4 @@ class FriendListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Friend.objects.filter(group__owner=self.request.user)
 
-class FriendCreateView(LoginRequiredMixin, CreateView):
-    model = Friend
-    form_class = FriendForm
-    template_name = 'friends/form.html'
-    success_url = reverse_lazy('friends:list')
 
-    def form_valid(self, form):
-        group = FriendGroup.objects.filter(owner=self.request.user).first()
-        form.instance.group = group
-        return super().form_valid(form)
-
-class FriendUpdateView(LoginRequiredMixin, UpdateView):
-    model = Friend
-    form_class = FriendForm
-    template_name = 'friends/form.html'
-    success_url = reverse_lazy('friends:list')
-
-class FriendDeleteView(LoginRequiredMixin, DeleteView):
-    model = Friend
-    template_name = 'friends/delete.html'
-    success_url = reverse_lazy('friends:list')
