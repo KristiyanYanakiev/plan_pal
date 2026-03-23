@@ -76,8 +76,8 @@ class ProposalDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         proposal = self.object
 
-        context['yes_users'] = proposal.votes.filter(yes=True)
-        context['no_users'] = proposal.votes.filter(yes=False)
+        context['yes_users'] = proposal.votes.filter(yes=True).values_list('user', flat=True)
+        context['no_users'] = proposal.votes.filter(yes=False).values_list('user', flat=True)
 
         voted_users = proposal.votes.values_list('user', flat=True)
 

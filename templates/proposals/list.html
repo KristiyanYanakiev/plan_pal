@@ -4,9 +4,9 @@
 {% block title %}Proposals{% endblock %}
 
 {% block content %}
-    <div class="container py-5">
-        <div>
-            <form method="GET" class="form-inline mb-4">
+<div class="container py-5">
+    <div>
+        <form method="GET" class="form-inline mb-4">
             <div class="input-group">
                 <input type="text" name="query" class="form-control" placeholder="Search proposal..." value="{{ request.GET.query|default:'' }}">
                 <div class="input-group-append ms-2">
@@ -14,34 +14,31 @@
                 </div>
             </div>
         </form>
-        </div>
-    
-        <h1 class="mb-4 text-center">Proposals</h1>
-        <div class="row g-4">
-    {% if proposals %}
-        {% for proposal in proposals %}
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                {% include 'proposals/_proposal_card.html' %}
-            </div>
-        {% endfor %}
-    {% else %}
-        <p class="text-center">
-            {% if request.GET.query %}
-                No proposals found for "{{ request.GET.query }}".
-            {% else %}
-                No proposals added yet.
-            {% endif %}
-        </p>
-    {% endif %}
-</div>
     </div>
-   <div class="d-flex justify-content-center align-items-center mb-4 d-grid gap-3">
-        <a href="{% url 'proposals:list' %}" class="btn btn-outline-secondary">
-            View All Proposals
-        </a>
+
+    <h1 class="mb-4 text-center">Proposals</h1>
+    <div class="row g-4">
+        {% if proposals %}
+            {% for proposal in proposals %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    {% include 'proposals/_proposal_card.html' %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">
+                {% if request.GET.query %}
+                    No proposals found for "{{ request.GET.query }}".
+                {% else %}
+                    No proposals added yet.
+                {% endif %}
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center mb-4 d-grid gap-3">
         <a href="{% url 'proposals:create' %}" class="btn btn-outline-primary">
             + Create a Proposal
         </a>
     </div>
-
+</div>
 {% endblock %}

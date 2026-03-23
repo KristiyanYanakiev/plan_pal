@@ -16,15 +16,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Vote',
+            name='Comment',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('yes', models.BooleanField()),
-                ('proposal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='votes', to='proposals.proposal')),
+                ('text', models.TextField()),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('proposal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='proposals.proposal')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-                'unique_together': {('user', 'proposal')},
-            },
         ),
     ]
