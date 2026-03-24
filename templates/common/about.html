@@ -9,24 +9,36 @@
             <div class="card shadow-sm p-4">
                 <h2 class="card-title text-center mb-4">About PlanPal</h2>
 
-                <p>PlanPal is a social planning web application designed for a <strong>single friend group</strong>.
-                It allows friends to:</p>
+                <p>
+                    PlanPal is a collaborative planning web application that allows <strong>multiple users</strong>
+                    to organize activities, share ideas, and make decisions together.
+                </p>
+
+                <p>With PlanPal, users can:</p>
                 <ul>
-                    <li>Create and manage friend profiles</li>
-                    <li>Propose activities and events</li>
-                    <li>Vote on which proposals to participate in</li>
-                    <li>Track upcoming and past events in a shared space</li>
+                    <li>Create and manage proposals for activities and events</li>
+                    <li>Invite other users to participate in proposals</li>
+                    <li>Vote on proposals in real time</li>
+                    <li>Leave comments and discuss plans with others</li>
+                    <li>Track upcoming and past events</li>
                 </ul>
 
-                <p>All friends, proposals,
-                and votes exist in a shared space, and there is no authentication. The goal is to provide a simple
-                and realistic tool for small communities to plan activities together without login or accounts.</p>
+                <p>
+                    Each proposal acts as a shared space where invited participants can collaborate.
+                    Only authenticated users can create proposals, vote, and comment, ensuring a
+                    secure and personalized experience.
+                </p>
 
-                <p>PlanPal is designed with simplicity in mind while offering practical functionality. Users can create, update, confirm, or cancel proposals; friends can participate by voting; and events are automatically grouped into Upcoming and Past categories according to their scheduled date, with these sections dynamically rendered on the home page.</p>
+                <p>
+                    PlanPal is designed to simulate a real-world planning system, where users interact
+                    directly with one another rather than through abstract “friend” objects.
+                    This makes the application more realistic, scalable, and suitable for real use cases.
+                </p>
 
                 <p class="text-center mt-4">
-                    <a href="{% url 'friends:list' %}" class="btn btn-primary btn-lg me-2">View Friends</a>
-                    <a href="{% url 'proposals:list' %}" class="btn btn-success btn-lg">View Proposals</a>
+                    <a href="{% url 'proposals:list' %}" class="btn btn-success btn-lg">
+                        View Proposals
+                    </a>
                 </p>
             </div>
         </div>

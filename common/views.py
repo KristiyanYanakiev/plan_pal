@@ -13,8 +13,8 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['past_events'] =Proposal.objects.filter(proposed_date_and_time__lt=timezone.now())
-        context['upcoming_events'] = Proposal.objects.filter(proposed_date_and_time__gte=timezone.now())
+        context['past_events'] =Proposal.objects.filter(date_time__lt=timezone.now())
+        context['upcoming_events'] = Proposal.objects.filter(date_time__gte=timezone.now())
 
         return context
 

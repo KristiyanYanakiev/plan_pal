@@ -8,35 +8,25 @@
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold">Welcome to PlanPal</h1>
         <p class="lead text-muted">
-            Organize activities, track plans, and vote on proposals with your friend group.
+            Organize activities, invite people, and vote on proposals together.
         </p>
     </div>
 
+    <!-- Main Actions -->
     <div class="row g-3 justify-content-center mb-5">
-        <div class="col-12 col-md-5">
-            <a href="{% url 'friends:create' %}" class="btn btn-primary btn-lg w-100 shadow-sm">
-                Create a Friend
-            </a>
-        </div>
-        <div class="col-12 col-md-5">
+        <div class="col-12 col-md-6">
             <a href="{% url 'proposals:create' %}" class="btn btn-success btn-lg w-100 shadow-sm">
-                Create a Proposal
+                + Create a Proposal
             </a>
         </div>
     </div>
 
+    <!-- Navigation Cards -->
     <div class="row g-3 mb-5 text-center justify-content-center">
         <div class="col-6 col-md-3">
             <div class="card shadow-sm h-100 p-3">
-                <h6 class="fw-semibold mb-2">Friends</h6>
-                <p class="text-muted small mb-3">Track each member of your social group.</p>
-                <a href="{% url 'friends:list' %}" class="btn btn-outline-primary btn-sm w-100">View</a>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card shadow-sm h-100 p-3">
                 <h6 class="fw-semibold mb-2">Proposals</h6>
-                <p class="text-muted small mb-3">Create & manage activity proposals.</p>
+                <p class="text-muted small mb-3">Create, manage, and vote on plans.</p>
                 <a href="{% url 'proposals:list' %}" class="btn btn-outline-success btn-sm w-100">View</a>
             </div>
         </div>
@@ -44,6 +34,7 @@
 
     <hr class="my-5">
 
+    <!-- Past Events -->
     <div class="mb-5">
         <h4 class="text-center mb-3 text-secondary">Past Events</h4>
         <div class="row g-4 justify-content-center">
@@ -57,6 +48,7 @@
         </div>
     </div>
 
+    <!-- Upcoming Events -->
     <div class="mb-5">
         <h4 class="text-center mb-3 text-primary">Upcoming Events</h4>
         <div class="row g-4 justify-content-center">

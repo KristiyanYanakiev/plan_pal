@@ -32,7 +32,7 @@ class ProposalForm(forms.ModelForm):
 
 
     def clean_proposed_date_and_time(self):
-        date_time = self.cleaned_data.get('proposed_date_and_time')
+        date_time = self.cleaned_data.get('date_time')
 
         if date_time and date_time < timezone.now():
             raise ValidationError("You cannot schedule an event in the past.")
