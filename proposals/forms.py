@@ -31,7 +31,7 @@ class ProposalForm(forms.ModelForm):
             self.fields['participants'].queryset = User.objects.exclude(id=user.id)
 
 
-    def clean_proposed_date_and_time(self):
+    def clean_date_time(self):
         date_time = self.cleaned_data.get('date_time')
 
         if date_time and date_time < timezone.now():
