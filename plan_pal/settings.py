@@ -38,7 +38,9 @@ PROJECT_APPS = [
     'accounts',
     'common',
     'comments',
-    'connections'
+    'connections',
+    'rest_framework',
+    'api'
 ]
 
 INSTALLED_APPS = [
