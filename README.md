@@ -81,6 +81,15 @@ The system replaces informal group chat planning with a centralized application 
 
 ---
 
+## ⚙️ Asynchronous Processing
+
+The application implements background processing for email notifications using Python threading.
+
+When a new proposal is created, email notifications are sent to all participants in the background without blocking the main request-response cycle.
+
+This improves user experience by keeping the application responsive during email sending operations.
+
+
 ## 🧠 Concept
 
 PlanPal is designed to simplify group coordination for friends.

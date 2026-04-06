@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import models
+from common.utils import run_in_background
+from common.tasks import send_email
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views import View
@@ -43,8 +44,20 @@ class ProposalCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         response = super().form_valid(form)
-
         form.instance.participants.add(self.request.user)
+
+        emails = [
+            user.email for user in form.instance.participants.all()
+            if user.email
+        ]
+
+        if emails:
+            run_in_background(
+                send_email,
+                "New Proposal",
+                f"A new proposal was created: {form.instance.title}",
+                emails
+            )
 
         return response
 
