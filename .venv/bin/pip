@@ -1,4 +1,4 @@
-#!/Users/yanakievkristian/plan_pal/.venv/bin/python3.11
+#!/Users/yanakievkristian/plan_pal/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
