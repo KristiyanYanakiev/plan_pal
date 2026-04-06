@@ -19,3 +19,6 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ('user', 'proposal')
+
+    def __str__(self):
+        return f"{self.user} -> {self.proposal} ({'YES' if self.yes else 'NO'})"

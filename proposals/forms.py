@@ -1,19 +1,9 @@
 from django import forms
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
-from proposals.models import Proposal
+from .models import Proposal
 
-User = get_user_model()
-
-
-class ProposalSearchForm(forms.Form):
-    query = forms.CharField(
-        max_length=100,
-        label='',
-        required=False
-    )
 
 class ProposalForm(forms.ModelForm):
     class Meta:
@@ -21,6 +11,12 @@ class ProposalForm(forms.ModelForm):
         exclude = ['owner']
         widgets = {
             'participants': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'date_time': forms.DateTimeInput(
+                attrs={
+                    'type': 'datetime-local',
+                    'class': 'form-control'
+                }
+            ),
         }
 
     def __init__(self, *args, **kwargs):
@@ -28,14 +24,14 @@ class ProposalForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if user:
-            self.fields['participants'].queryset = User.objects.exclude(id=user.id)
-
+            self.fields['participants'].queryset = user.get_friends()
+        else:
+            self.fields['participants'].queryset = self.fields['participants'].queryset.none()
 
     def clean_date_time(self):
-        date_time = self.cleaned_data.get('date_time')
+        dt = self.cleaned_data.get('date_time')
 
-        if date_time and date_time < timezone.now():
-            raise ValidationError("You cannot schedule an event in the past.")
+        if dt and dt < timezone.now():
+            raise ValidationError("Invalid date")
 
-        return date_time
-
+        return dt
