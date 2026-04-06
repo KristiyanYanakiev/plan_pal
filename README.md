@@ -1,39 +1,100 @@
 # PlanPal
 
-PlanPal is a Django web application that helps a small group of friends organize activities, propose events, and vote on attendance in a clear and structured way.
-The goal of the project is to replace messy group chats with a simple shared planner where everyone can instantly see what is planned and who is coming.
+PlanPal is a Django-based social planning platform designed for groups of friends to organize events, propose activities, vote on participation, and manage social coordination in a structured and transparent way.
+
+The system replaces informal group chat planning with a centralized application where users can create proposals, invite participants, vote, and comment in real time.
 
 ---
 
 ## ✨ Features
 
-- Create and manage friends  
-- Create, edit, and delete event proposals  
-- Vote **Yes / No** for each proposal  
-- Leave notes for clarifications  
-- Automatic tracking of:
-  - Attending
-  - Not attending
-  - No response  
-- Dashboard with **Upcoming** and **Past** events - event are dynamically computed based on the current date, so the list always stays up-to-date
-- Event date validation (cannot schedule events in the past)  
-- Clean responsive UI built with Bootstrap 5  
+### 👥 User & Friends System
+- User registration, login, logout
+- Extended Django User model (custom user system)
+- Friend request system:
+  - Send friend requests
+  - Accept / reject requests
+  - View friends list
+
+---
+
+### 📅 Proposal System
+- Create, edit, and delete event proposals
+- Assign participants to proposals (friends only)
+- Add notes and event details
+- Date validation (no past events allowed)
+- Filtered proposal access per user (participants + owner only)
+
+---
+
+### 🗳 Voting System
+- Vote YES / NO for each proposal
+- Users can change their vote (update_or_create logic)
+- Live vote tracking:
+  - Yes votes
+  - No votes
+  - Users who have not voted yet
+- Owner cannot vote on their own proposal
+
+---
+
+### 💬 Comments System
+- Add comments to proposals
+- Delete own comments
+- Comment access restricted to participants and owner
+
+---
+
+### 🔎 Search & Filtering
+- Search proposals by title
+- Filter proposals by user participation
+
+---
+
+### 🌐 REST API (Django REST Framework)
+- Proposal API endpoints implemented using DRF
+- Serializer-based architecture
+- Authentication-protected endpoints
+- Structured JSON responses for proposals
+
+---
+
+### 📊 Dashboard Features
+- Upcoming vs past events (computed dynamically)
+- Proposal participation overview
+- Voting status overview per user
+
+---
+
+### 🎨 UI / UX
+- Responsive design using Bootstrap 5
+- Reusable base template with navigation and footer
+- Clean and consistent layout across all pages
+- Conditional navigation based on authentication status
+
+---
+
+### ⚠️ Error Handling
 - Custom 404 page
-- Custom error messages
+- Custom 500 page
+- User-friendly validation error messages
 
 ---
 
 ## 🧠 Concept
 
-PlanPal is designed to be used by one social group of friends without authentication.
-Instead of discussing plans endlessly in chat, one person creates a proposal:
+PlanPal is designed to simplify group coordination for friends.
 
-> “Bowling on Friday at 19:00?”
+Instead of managing plans in chat applications, users create structured event proposals:
 
-Each friend selects themselves and votes.  
-The system immediately shows who is coming and who is not.
+> “Bowling Friday at 19:00?”
 
-This makes planning fast, transparent, and organized.
+Friends are added as participants, vote on attendance, and leave comments for clarification.
+
+The system ensures:
+- Transparency
+- Organization
+- Easy decision-making
 
 ---
 
@@ -41,27 +102,38 @@ This makes planning fast, transparent, and organized.
 
 Main entities:
 
-- **Friend** — a member of the group  
-- **Proposal** — an activity suggestion (time, place, notes)  
-- **Vote** — a friend’s response to a proposal  
+- **CustomUser** — extended Django user model
+- **FriendRequest** — manages friendships between users
+- **Proposal** — event/activity proposal
+- **Vote** — YES/NO response per user per proposal
+- **Comment** — user discussion on proposals
 
-The home dashboard separates upcoming and past events for quick overview.
+### Relationships:
+- User ↔ User (friend system)
+- User → Proposal (owner)
+- Proposal ↔ Users (participants M2M)
+- User → Vote (FK)
+- Proposal → Vote (FK)
+- User → Comment (FK)
+- Proposal → Comment (FK)
 
 ---
 
 ## 🛠 Tech Stack
 
-- Python  
-- Django  
-- PostgreSQL  
-- Bootstrap 5  
+- Python 3.11+
+- Django 4+
+- Django REST Framework
+- PostgreSQL
+- Bootstrap 5
 
 ---
 
 ## ⚙️ Requirements
 
 - Python 3.10+
-- PostgreSQL installed and running
+- PostgreSQL
+- pip / virtualenv
 
 ---
 
@@ -98,49 +170,3 @@ python3 manage.py runserver
 ### Open in your browser:
 http://127.0.0.1:8000/
 
----
-
-## 🔐 Environment Variables
-
-| Variable      | Description |
-|--------------|------------|
-| DB_NAME      | PostgreSQL database name |
-| DB_USER      | Database username |
-| DB_PASSWORD  | Database password |
-| DB_HOST      | Database host |
-| DB_PORT      | Database port |
-
----
-
-## 📦 Project Purpose
-
-This project was built as a portfolio application demonstrating:
-
-- Django models and relationships  
-- Forms and validation  
-- Function-based views  
-- Business logic enforcement  
-- Clean UI integration  
-- Real-world problem-solving  
-
----
-
-## Screenshots
-
-### Friends List
-![Friends List](screenshots/friends_list.png)
-
-### Create Friend
-![Create Friend](screenshots/create_friend.png)
-
-### Friends List
-![Proposals List](screenshots/proposal_list.png)
-
-### Create Proposal
-![Create Proposal](screenshots/create_proposal.png)
-
-### Voting a Proposal
-![Voting a Proposal](screenshots/voting_functionality.png)
-
-### Past and Upcoming events
-![Voting a Proposal](screenshots/past_and_upcoming_events.png)

@@ -1,0 +1,33 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block title %}Server Error{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center"
+     style="min-height: 80vh;">
+
+    <div class="text-center">
+
+        <h1 class="display-1 fw-bold text-danger">500</h1>
+
+        <h3 class="mb-3">Internal Server Error</h3>
+
+        <p class="text-muted mb-4">
+            Something went wrong on our side. Please try again later.
+            If the problem persists, contact support.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'proposals:list' %}" class="btn btn-primary px-4">
+                Go to Home
+            </a>
+
+            <button onclick="location.reload()" class="btn btn-outline-secondary px-4">
+                Retry
+            </button>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

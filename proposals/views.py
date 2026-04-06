@@ -32,6 +32,8 @@ class ProposalListView(LoginRequiredMixin, ListView):
 
         return qs
 
+
+
 class ProposalCreateView(LoginRequiredMixin, CreateView):
     model = Proposal
     form_class = ProposalForm
