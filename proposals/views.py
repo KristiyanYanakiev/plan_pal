@@ -23,10 +23,14 @@ class ProposalListView(LoginRequiredMixin, ListView):
     context_object_name = 'proposals'
 
     def get_queryset(self):
-        return Proposal.objects.filter(
-            participants=self.request.user
-        ).distinct()
+        user = self.request.user
+        qs = Proposal.objects.filter(participants=user).distinct()
 
+        query = self.request.GET.get('query')
+        if query:
+            qs = qs.filter(title__icontains=query)
+
+        return qs
 
 class ProposalCreateView(LoginRequiredMixin, CreateView):
     model = Proposal
