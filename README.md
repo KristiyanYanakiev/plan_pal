@@ -6,6 +6,12 @@ The system replaces informal group chat planning with a centralized application 
 
 ---
 
+## 🚀 Live Demo
+
+The project is deployed and available here:
+
+https://plan-pal-um7c.onrender.com
+
 ## ✨ Features
 
 ### 👥 User & Friends System
