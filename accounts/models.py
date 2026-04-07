@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import Q
@@ -6,7 +7,7 @@ from django.db.models import Q
 # Create your models here.
 class CustomUser(AbstractUser):
     bio = models.TextField(blank=True, null=True)
-    profile_image = models.ImageField(upload_to='profiles', blank=True, null=True)
+    profile_image = CloudinaryField('image', blank=True, null=True)
 
     def get_friends(self):
         return self.__class__.objects.filter(
