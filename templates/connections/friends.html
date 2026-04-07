@@ -7,11 +7,28 @@
 
     {% if friends %}
         <ul class="list-group">
+
             {% for friend in friends %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ friend.username }}
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        {% if friend.image %}
+                            <img src="{{ friend.image.url }}"
+                                 width="45" height="45"
+                                 style="border-radius:50%; object-fit:cover;">
+                        {% else %}
+                            <img src="/static/default-avatar.png"
+                                 width="45" height="45"
+                                 style="border-radius:50%; object-fit:cover;">
+                        {% endif %}
+
+                        <span>{{ friend.username }}</span>
+                    </div>
+
                 </li>
             {% endfor %}
+
         </ul>
     {% else %}
         <p>You have no friends yet.</p>
